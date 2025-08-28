@@ -1,0 +1,98 @@
+=====================================
+SISTEMA DE RECETAS VETERINARIAS
+Dr. Camilo Vergara
+=====================================
+
+🚀 COMO USAR ESTE SISTEMA:
+
+1. ABRIR LA APLICACION:
+   - Haz doble clic en "index.html"
+   - Se abrirá automáticamente en tu navegador
+   - No necesitas instalar nada más
+
+2. PRIMERA VEZ:
+   - Completa los datos del paciente
+   - Agrega medicamentos con + Agregar Medicamento
+   - Haz clic en "Generar Receta"
+   - Guarda la receta si quieres conservarla
+
+3. FUNCIONES PRINCIPALES:
+   ✅ Crear recetas nuevas
+   ✅ Guardar recetas en tu computadora
+   ✅ Ver todas las recetas guardadas
+   ✅ Imprimir recetas en PDF
+   ✅ Exportar/Importar para respaldos
+
+=====================================
+📁 ARCHIVOS IMPORTANTES:
+
+📄 index.html          - ARCHIVO PRINCIPAL (haz doble clic aquí)
+📋 README.md           - Información completa del sistema
+📖 manual-usuario.md   - Manual paso a paso
+⚙️ config.json         - Configuración (no modificar)
+
+📁 assets/
+   📁 css/             - Estilos visuales
+   📁 js/              - Lógica del sistema
+   📁 images/          - Logos e imágenes
+
+=====================================
+🔧 PERSONALIZACION:
+
+Para cambiar el logo:
+- Reemplaza "assets/images/logo-veterinario.png"
+- Mantén el mismo nombre de archivo
+
+Para cambiar la firma:
+- Reemplaza "assets/images/firma.png" 
+- Mantén el mismo nombre de archivo
+
+Para cambiar datos del veterinario:
+- Edita la información en index.html
+- Busca la sección "Dr. Camilo Vergara"
+
+=====================================
+💾 TUS DATOS:
+
+✅ Se guardan automáticamente en tu navegador
+✅ Son completamente privados (no se envían a internet)
+✅ Persisten al cerrar y abrir el navegador
+⚠️ Son específicos de cada navegador
+⚠️ Haz respaldos regulares con "Exportar Recetas"
+
+=====================================
+🆘 PROBLEMAS COMUNES:
+
+❌ "No funciona al hacer doble clic"
+   ➡️ Clic derecho → Abrir con → Tu navegador
+
+❌ "Se ven mal los estilos"
+   ➡️ Asegúrate que todas las carpetas estén completas
+   ➡️ Prueba con Chrome o Firefox
+
+❌ "No se guardan mis recetas"
+   ➡️ No uses modo incógnito/privado del navegador
+   ➡️ Permite que el navegador guarde datos
+
+❌ "Perdí mis recetas"
+   ➡️ Busca si tienes un archivo de respaldo .json
+   ➡️ Usa "Importar Recetas" para restaurarlo
+
+=====================================
+📞 SOPORTE:
+
+Para dudas técnicas o problemas contacta al desarrollador.
+
+=====================================
+🌐 NAVEGADORES COMPATIBLES:
+
+✅ Google Chrome (Recomendado)
+✅ Mozilla Firefox  
+✅ Microsoft Edge
+✅ Safari (Mac)
+✅ Navegadores móviles
+
+=====================================
+
+¡LISTO PARA USAR! 
+Haz doble clic en "index.html" para empezar 🐾

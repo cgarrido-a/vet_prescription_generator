@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de gestión de recetas veterinarias - Dr. Camilo Vergara">
+  <meta name="author" content="Dr. Camilo Vergara">
+  
+  <title>Receta Veterinaria - Dr. Camilo Vergara</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/print.css" media="print">
+</head>
+<body>
+  <div class="contenedor">
+    
+    <!-- FORM VIEW -->
+    <div id="formulario" class="formulario">
+      <!-- Logo Section -->
+      <div class="logo">
+        <img src="assets/images/logo-veterinario.png" alt="Logo Veterinario" onerror="this.src='https://via.placeholder.com/200x120/006d5b/white?text=VETERINARIA'">
+      </div>
+      
+      <!-- Patient Information Form -->
+      <form id="recipe-form" novalidate>
+        <div class="campo">
+          <label for="paciente">Paciente *</label>
+          <input 
+            type="text" 
+            id="paciente" 
+            name="paciente"
+            placeholder="Nombre del Paciente"
+            required
+            autocomplete="off"
+          >
+        </div>
+        
+        <div class="campo">
+          <label for="tutora">Tutor(a) *</label>
+          <input 
+            type="text" 
+            id="tutora" 
+            name="tutora"
+            placeholder="Nombre del Tutor(a)"
+            required
+            autocomplete="off"
+          >
+        </div>
+        
+        <div class="campo">
+          <label for="fecha">Fecha *</label>
+          <input 
+            type="date" 
+            id="fecha" 
+            name="fecha"
+            required
+          >
+        </div>
+
+        <!-- Medications Section -->
+        <div id="medicamentos" class="medications-container">
+          <!-- Medication groups will be added dynamically -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="botones" id="botones-formulario">
+          <button type="button" onclick="agregarMedicamento()">
+            + Agregar Medicamento
+          </button>
+          <button type="button" onclick="generarReceta()" class="btn-primary">
+            Generar Receta
+          </button>
+          <button type="button" onclick="mostrarRecetasGuardadas()" class="btn-secondary">
+            Ver Recetas Guardadas
+          </button>
+          <button type="button" onclick="DataManager.migrateLocalData()" class="btn-secondary" id="migrate-btn" style="display:none;">
+            📤 Migrar a Base de Datos
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PRESCRIPTION VIEW -->
+    <div id="resultado" class="receta" style="display:none">
+      <!-- Action Buttons (No Print) -->
+      <div class="botones no-print" style="justify-content: flex-end; margin-bottom: 20px;">
+        <button onclick="window.print()">📄 Imprimir PDF</button>
+        <button onclick="guardarReceta()" class="btn-secondary">💾 Guardar Receta</button>
+        <button onclick="nuevaReceta()" class="btn-secondary">📝 Nueva Receta</button>
+      </div>
+      
+      <!-- Logo Section -->
+      <div class="logo">
+        <img src="assets/images/logo-veterinario.png" alt="Logo Veterinario" onerror="this.src='https://via.placeholder.com/200x120/006d5b/white?text=VETERINARIA'">
+      </div>
+      
+      <!-- Patient Information Display -->
+      <div class="patient-info">
+        <p><strong>Paciente:</strong> <span id="r-paciente"></span></p>
+        <p><strong>Tutor(a):</strong> <span id="r-tutora"></span></p>
+        <p><strong>Fecha:</strong> <span id="r-fecha"></span></p>
+      </div>
+      
+      <!-- Prescription Box -->
+      <div class="prescription-box">
+        <p><i>Rp.</i></p>
+        <ul id="r-receta">
+          <!-- Medications will be listed here -->
+        </ul>
+      </div>
+
+      <!-- Signature Section -->
+      <div class="firma">
+        <img src="assets/images/firma.png" alt="Firma" onerror="this.src='https://via.placeholder.com/150x60/333/white?text=FIRMA'">
+        <p>
+          <strong>Dr. Camilo Vergara</strong><br>
+          Médico Veterinario<br>
+          RUT 17.622.685-4
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <hr style="margin-top: 60px; border: 2px solid #333;">
+      <div class="pie">NO AUTORIZO CAMBIO DE PRESCRIPCIÓN</div>
+    </div>
+
+    <!-- SAVED RECIPES VIEW -->
+    <div id="recetas-guardadas" class="saved-recipes-view" style="display:none">
+      <!-- Navigation Header -->
+      <div class="nav-section">
+        <h2>📋 Recetas Guardadas</h2>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="botones no-print" style="justify-content: space-between; margin-bottom: 20px;">
+        <div>
+          <button onclick="volverFormulario()" class="btn-secondary">
+            ← Volver al Formulario
+          </button>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="exportarRecetas()">📤 Exportar Recetas</button>
+          <input 
+            type="file" 
+            id="importarArchivo" 
+            accept=".json" 
+            style="display:none" 
+            onchange="importarRecetas(event)"
+          >
+          <button onclick="document.getElementById('importarArchivo').click()" class="btn-secondary">
+            📥 Importar Recetas
+          </button>
+        </div>
+      </div>
+      
+      <!-- Recipes List Container -->
+      <div id="lista-recetas" class="recipes-list">
+        <!-- Recipe cards will be added dynamically -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loading Indicator (Hidden by default) -->
+  <div id="loading" class="loading-indicator" style="display: none;">
+    <div class="spinner"></div>
+    <p>Cargando...</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

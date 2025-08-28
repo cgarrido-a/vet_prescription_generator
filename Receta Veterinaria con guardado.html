@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receta Veterinaria</title>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    
+    .contenedor {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo img {
+      max-height: 120px;
+      border-radius: 8px;
+    }
+    
+    .formulario {
+      margin-bottom: 30px;
+    }
+    
+    .campo {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #006d5b;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #006d5b;
+    }
+    
+    .receta {
+      border-top: 2px solid #333;
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+    
+    .firma {
+      text-align: right;
+      margin-top: 50px;
+    }
+    
+    .firma img {
+      height: 60px;
+      margin-bottom: 10px;
+    }
+    
+    .pie {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-top: 50px;
+      font-weight: bold;
+    }
+    
+    .botones {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #3730a3;
+    }
+    
+    .btn-secondary {
+      background-color: #6b7280;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #4b5563;
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .medicamento-group {
+      border: 2px dashed #d1d5db;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background-color: #f9fafb;
+    }
+    
+    .medicamento-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .prescription-box {
+      border: 3px solid #333;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+    
+    .prescription-box p {
+      margin: 0 0 10px 0;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .prescription-box ul {
+      margin: 15px 0;
+      padding-left: 20px;
+    }
+    
+    .prescription-box li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    
+    .patient-info {
+      background-color: #f8fafc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .patient-info p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    
+    .receta-item {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: white;
+    }
+    
+    .receta-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .receta-info {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .receta-medicamentos {
+      font-size: 14px;
+    }
+    
+    .receta-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      
+      .contenedor {
+        padding: 20px;
+      }
+      
+      .botones {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .receta-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <div class="formulario">
+      <div class="logo">
+        <img src="/placeholder.svg?height=120&width=200" alt="Logo Veterinario">
+      </div>
+      
+      <div class="campo">
+        <label>Paciente</label>
+        <input type="text" id="paciente" placeholder="Nombre del Paciente">
+      </div>
+      
+      <div class="campo">
+        <label>Tutor(a)</label>
+        <input type="text" id="tutora" placeholder="Nombre del Tutor(a)">
+      </div>
+      
+      <div class="campo">
+        <label>Fecha</label>
+        <input type="date" id="fecha">
+      </div>
+
+      <div id="medicamentos">
+        <div class="medicamento-group">
+          <div class="medicamento-header">
+            <label>Medicamento</label>
+          </div>
+          <input type="text" class="medicamento" placeholder="Nombre del Medicamento">
+          <label style="margin-top: 10px;">Indicación</label>
+          <textarea rows="3" class="indicacion" placeholder="Dosis, frecuencia y duración del tratamiento"></textarea>
+        </div>
+      </div>
+
+      <div class="botones" id="botones-formulario">
+        <button onclick="agregarMedicamento()">+ Agregar Medicamento</button>
+        <button onclick="generarReceta()">Generar Receta</button>
+        <button onclick="mostrarRecetasGuardadas()" class="btn-secondary">Ver Recetas Guardadas</button>
+      </div>
+    </div>
+
+    <div id="resultado" class="receta" style="display:none">
+      <div class="botones no-print" style="justify-content: flex-end; margin-bottom: 20px;">
+        <button onclick="window.print()">Imprimir PDF</button>
+        <button onclick="guardarReceta()" class="btn-secondary">Guardar Receta</button>
+        <button onclick="nuevaReceta()" class="btn-secondary">Nueva Receta</button>
+      </div>
+      
+      <div class="logo">
+        <img src="/placeholder.svg?height=120&width=200" alt="Logo Veterinario">
+      </div>
+      
+      <div class="patient-info">
+        <p><strong>Paciente:</strong> <span id="r-paciente"></span></p>
+        <p><strong>Tutor(a):</strong> <span id="r-tutora"></span></p>
+        <p><strong>Fecha:</strong> <span id="r-fecha"></span></p>
+      </div>
+      
+      <div class="prescription-box">
+        <p><i>Rp.</i></p>
+        <ul id="r-receta"></ul>
+      </div>
+
+      <div class="firma">
+        <img src="/placeholder.svg?height=60&width=150" alt="Firma">
+        <p><strong>Dr. Camilo Vergara</strong><br>Médico Veterinario<br>RUT 17.622.685-4</p>
+      </div>
+
+      <hr style="margin-top: 60px; border: 2px solid #333;">
+      <div class="pie">NO AUTORIZO CAMBIO DE PRESCRIPCIÓN</div>
+    </div>
+
+    <!-- Vista de recetas guardadas -->
+    <div id="recetas-guardadas" style="display:none">
+      <div class="botones no-print" style="justify-content: flex-end; margin-bottom: 20px;">
+        <button onclick="volverFormulario()" class="btn-secondary">Volver al Formulario</button>
+        <button onclick="exportarRecetas()">Exportar Recetas</button>
+        <input type="file" id="importarArchivo" accept=".json" style="display:none" onchange="importarRecetas(event)">
+        <button onclick="document.getElementById('importarArchivo').click()" class="btn-secondary">Importar Recetas</button>
+      </div>
+      
+      <h2>Recetas Guardadas</h2>
+      <div id="lista-recetas"></div>
+    </div>
+  </div>
+
+  <script>
+    function agregarMedicamento() {
+      const container = document.getElementById('medicamentos');
+      const group = document.createElement('div');
+      group.className = 'medicamento-group';
+      group.innerHTML = `
+        <div class="medicamento-header">
+          <label>Medicamento</label>
+          <button onclick="this.closest('.medicamento-group').remove()" class="btn-danger">Eliminar</button>
+        </div>
+        <input type="text" class="medicamento" placeholder="Medicamento">
+        <label style="margin-top: 10px;">Indicación</label>
+        <textarea rows="3" class="indicacion" placeholder="Dosis, frecuencia y duración del tratamiento"></textarea>
+      `;
+      container.appendChild(group);
+    }
+
+    function generarReceta() {
+      // Validate required fields
+      const paciente = document.getElementById('paciente').value.trim();
+      const tutora = document.getElementById('tutora').value.trim();
+      const fecha = document.getElementById('fecha').value;
+      
+      if (!paciente || !tutora || !fecha) {
+        alert('Por favor complete todos los campos obligatorios.');
+        return;
+      }
+      
+      // Check if at least one medication is filled
+      const medicamentos = document.querySelectorAll('.medicamento');
+      const indicaciones = document.querySelectorAll('.indicacion');
+      let hasMedication = false;
+      
+      for (let i = 0; i < medicamentos.length; i++) {
+        if (medicamentos[i].value.trim() && indicaciones[i].value.trim()) {
+          hasMedication = true;
+          break;
+        }
+      }
+      
+      if (!hasMedication) {
+        alert('Por favor agregue al menos un medicamento con su indicación.');
+        return;
+      }
+
+      // Fill prescription data
+      document.getElementById('r-paciente').textContent = paciente;
+      document.getElementById('r-tutora').textContent = tutora;
+      
+      // Format date
+      const [year, month, day] = fecha.split('-');
+      const fechaFormateada = `${day}/${month}/${year}`;
+      document.getElementById('r-fecha').textContent = fechaFormateada;
+
+      // Fill medications
+      const recetaLista = document.getElementById('r-receta');
+      recetaLista.innerHTML = '';
+      
+      for (let i = 0; i < medicamentos.length; i++) {
+        const med = medicamentos[i].value.trim();
+        const ind = indicaciones[i].value.trim();
+        if (med && ind) {
+          const item = document.createElement('li');
+          item.innerHTML = `<strong>${med}:</strong> ${ind}`;
+          recetaLista.appendChild(item);
+        }
+      }
+
+      // Show prescription
+      document.querySelector('.formulario').style.display = 'none';
+      document.getElementById('resultado').style.display = 'block';
+    }
+
+    function nuevaReceta() {
+      // Reset form
+      document.getElementById('paciente').value = '';
+      document.getElementById('tutora').value = '';
+      
+      // Reset medications to just one
+      const medicamentosContainer = document.getElementById('medicamentos');
+      medicamentosContainer.innerHTML = `
+        <div class="medicamento-group">
+          <div class="medicamento-header">
+            <label>Medicamento</label>
+          </div>
+          <input type="text" class="medicamento" placeholder="Medicamento">
+          <label style="margin-top: 10px;">Indicación</label>
+          <textarea rows="3" class="indicacion" placeholder="Dosis, frecuencia y duración del tratamiento"></textarea>
+        </div>
+      `;
+      
+      // Show form again
+      document.querySelector('.formulario').style.display = 'block';
+      document.getElementById('resultado').style.display = 'none';
+      
+      // Set today's date
+      setTodayDate();
+    }
+
+    function setTodayDate() {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const today = `${year}-${month}-${day}`;
+      document.getElementById('fecha').value = today;
+    }
+
+    // Initialize with today's date
+    document.addEventListener("DOMContentLoaded", function() {
+      setTodayDate();
+    });
+
+    // Funciones para guardar y cargar recetas
+    function guardarReceta() {
+      const paciente = document.getElementById('r-paciente').textContent;
+      const tutora = document.getElementById('r-tutora').textContent;
+      const fecha = document.getElementById('r-fecha').textContent;
+      
+      // Obtener medicamentos
+      const medicamentos = [];
+      const medicamentosLista = document.querySelectorAll('#r-receta li');
+      medicamentosLista.forEach(item => {
+        const texto = item.innerHTML;
+        const [nombre, indicacion] = texto.split(':</strong> ');
+        if (nombre && indicacion) {
+          medicamentos.push({
+            nombre: nombre.replace('<strong>', ''),
+            indicacion: indicacion
+          });
+        }
+      });
+      
+      const receta = {
+        id: Date.now().toString(),
+        paciente: paciente,
+        tutora: tutora,
+        fecha: fecha,
+        medicamentos: medicamentos,
+        fechaGuardado: new Date().toISOString()
+      };
+      
+      // Obtener recetas guardadas
+      let recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+      recetasGuardadas.push(receta);
+      localStorage.setItem('recetasVeterinarias', JSON.stringify(recetasGuardadas));
+      
+      alert('Receta guardada exitosamente');
+    }
+
+    function mostrarRecetasGuardadas() {
+      document.querySelector('.formulario').style.display = 'none';
+      document.getElementById('resultado').style.display = 'none';
+      document.getElementById('recetas-guardadas').style.display = 'block';
+      cargarListaRecetas();
+    }
+
+    function volverFormulario() {
+      document.querySelector('.formulario').style.display = 'block';
+      document.getElementById('resultado').style.display = 'none';
+      document.getElementById('recetas-guardadas').style.display = 'none';
+    }
+
+    function cargarListaRecetas() {
+      const recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+      const listaContainer = document.getElementById('lista-recetas');
+      
+      if (recetasGuardadas.length === 0) {
+        listaContainer.innerHTML = '<p>No hay recetas guardadas</p>';
+        return;
+      }
+      
+      listaContainer.innerHTML = '';
+      
+      // Ordenar por fecha de guardado más reciente
+      recetasGuardadas.sort((a, b) => new Date(b.fechaGuardado) - new Date(a.fechaGuardado));
+      
+      recetasGuardadas.forEach(receta => {
+        const recetaDiv = document.createElement('div');
+        recetaDiv.className = 'receta-item';
+        
+        const medicamentosTexto = receta.medicamentos.map(m => `${m.nombre}: ${m.indicacion}`).join('; ');
+        
+        recetaDiv.innerHTML = `
+          <div class="receta-header">
+            <h3>${receta.paciente}</h3>
+            <span class="receta-info">Guardada: ${new Date(receta.fechaGuardado).toLocaleDateString()}</span>
+          </div>
+          <div class="receta-info">
+            <strong>Tutor:</strong> ${receta.tutora}<br>
+            <strong>Fecha de receta:</strong> ${receta.fecha}
+          </div>
+          <div class="receta-medicamentos">
+            <strong>Medicamentos:</strong><br>
+            ${receta.medicamentos.map(m => `• ${m.nombre}: ${m.indicacion}`).join('<br>')}
+          </div>
+          <div class="receta-actions">
+            <button onclick="cargarReceta('${receta.id}')" class="btn-small">Cargar</button>
+            <button onclick="eliminarReceta('${receta.id}')" class="btn-danger btn-small">Eliminar</button>
+          </div>
+        `;
+        
+        listaContainer.appendChild(recetaDiv);
+      });
+    }
+
+    function cargarReceta(id) {
+      const recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+      const receta = recetasGuardadas.find(r => r.id === id);
+      
+      if (!receta) {
+        alert('Receta no encontrada');
+        return;
+      }
+      
+      // Cargar datos en el formulario
+      document.getElementById('paciente').value = receta.paciente;
+      document.getElementById('tutora').value = receta.tutora;
+      
+      // Convertir fecha de DD/MM/YYYY a YYYY-MM-DD
+      const [day, month, year] = receta.fecha.split('/');
+      document.getElementById('fecha').value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      
+      // Limpiar medicamentos actuales
+      const medicamentosContainer = document.getElementById('medicamentos');
+      medicamentosContainer.innerHTML = '';
+      
+      // Cargar medicamentos
+      receta.medicamentos.forEach((med, index) => {
+        const group = document.createElement('div');
+        group.className = 'medicamento-group';
+        
+        const medicamentoHeader = document.createElement('div');
+        medicamentoHeader.className = 'medicamento-header';
+        
+        const label = document.createElement('label');
+        label.textContent = 'Medicamento';
+        medicamentoHeader.appendChild(label);
+        
+        if (index > 0) {
+          const btnEliminar = document.createElement('button');
+          btnEliminar.className = 'btn-danger';
+          btnEliminar.textContent = 'Eliminar';
+          btnEliminar.onclick = function() { group.remove(); };
+          medicamentoHeader.appendChild(btnEliminar);
+        }
+        
+        const inputMed = document.createElement('input');
+        inputMed.type = 'text';
+        inputMed.className = 'medicamento';
+        inputMed.placeholder = 'Medicamento';
+        inputMed.value = med.nombre;
+        
+        const labelInd = document.createElement('label');
+        labelInd.textContent = 'Indicación';
+        labelInd.style.marginTop = '10px';
+        
+        const textareaInd = document.createElement('textarea');
+        textareaInd.rows = 3;
+        textareaInd.className = 'indicacion';
+        textareaInd.placeholder = 'Dosis, frecuencia y duración del tratamiento';
+        textareaInd.value = med.indicacion;
+        
+        group.appendChild(medicamentoHeader);
+        group.appendChild(inputMed);
+        group.appendChild(labelInd);
+        group.appendChild(textareaInd);
+        
+        medicamentosContainer.appendChild(group);
+      });
+      
+      volverFormulario();
+      alert('Receta cargada en el formulario');
+    }
+
+    function eliminarReceta(id) {
+      if (!confirm('¿Está seguro de que desea eliminar esta receta?')) {
+        return;
+      }
+      
+      let recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+      recetasGuardadas = recetasGuardadas.filter(r => r.id !== id);
+      localStorage.setItem('recetasVeterinarias', JSON.stringify(recetasGuardadas));
+      
+      cargarListaRecetas();
+      alert('Receta eliminada');
+    }
+
+    function exportarRecetas() {
+      const recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+      
+      if (recetasGuardadas.length === 0) {
+        alert('No hay recetas para exportar');
+        return;
+      }
+      
+      const dataStr = JSON.stringify(recetasGuardadas, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(dataBlob);
+      link.download = `recetas_veterinarias_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      alert('Recetas exportadas exitosamente');
+    }
+
+    function importarRecetas(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const recetasImportadas = JSON.parse(e.target.result);
+          
+          if (!Array.isArray(recetasImportadas)) {
+            throw new Error('Formato de archivo incorrecto');
+          }
+          
+          let recetasGuardadas = JSON.parse(localStorage.getItem('recetasVeterinarias')) || [];
+          
+          // Añadir recetas importadas con nuevos IDs para evitar conflictos
+          recetasImportadas.forEach(receta => {
+            receta.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+            receta.fechaGuardado = new Date().toISOString();
+            recetasGuardadas.push(receta);
+          });
+          
+          localStorage.setItem('recetasVeterinarias', JSON.stringify(recetasGuardadas));
+          
+          alert(`${recetasImportadas.length} recetas importadas exitosamente`);
+          cargarListaRecetas();
+        } catch (error) {
+          alert('Error al importar recetas: Archivo no válido');
+        }
+      };
+      reader.readAsText(file);
+      
+      // Limpiar el input file
+      event.target.value = '';
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,363 @@
+/* =================================
+   RECETA VETERINARIA - STYLES
+   ================================= */
+
+/* Print Styles */
+@media print {
+  .no-print { 
+    display: none !important; 
+  }
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Main Container */
+.contenedor {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Logo Section */
+.logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo img {
+  max-height: 120px;
+  border-radius: 8px;
+}
+
+/* Form Styles */
+.formulario {
+  margin-bottom: 30px;
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #006d5b;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #004d42;
+  box-shadow: 0 0 0 3px rgba(0, 109, 91, 0.1);
+}
+
+/* Button Styles */
+.botones {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #3730a3;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* Medication Group */
+.medicamento-group {
+  border: 2px dashed #d1d5db;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  transition: border-color 0.3s ease;
+}
+
+.medicamento-group:hover {
+  border-color: #9ca3af;
+}
+
+.medicamento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Prescription Styles */
+.receta {
+  border-top: 2px solid #333;
+  padding-top: 30px;
+  margin-top: 30px;
+}
+
+.prescription-box {
+  border: 3px solid #333;
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.prescription-box p {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.prescription-box ul {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.prescription-box li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Patient Info */
+.patient-info {
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #006d5b;
+}
+
+.patient-info p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+/* Signature */
+.firma {
+  text-align: right;
+  margin-top: 50px;
+}
+
+.firma img {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.pie {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Saved Recipes */
+.receta-item {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.receta-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.receta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.receta-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.receta-info {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.receta-medicamentos {
+  font-size: 14px;
+  background-color: #f8fafc;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.receta-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Navigation */
+.nav-section {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.nav-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Empty States */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.empty-state img {
+  max-width: 120px;
+  opacity: 0.5;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  body {
+    padding: 10px;
+  }
+  
+  .contenedor {
+    padding: 20px;
+  }
+  
+  .botones {
+    flex-direction: column;
+  }
+  
+  button {
+    width: 100%;
+  }
+  
+  .receta-actions {
+    flex-direction: column;
+  }
+  
+  .receta-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .medicamento-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor {
+    padding: 15px;
+  }
+  
+  .logo img {
+    max-height: 80px;
+  }
+  
+  input, textarea {
+    padding: 10px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  input, textarea {
+    border-width: 3px;
+  }
+  
+  button {
+    border: 2px solid currentColor;
+  }
+}

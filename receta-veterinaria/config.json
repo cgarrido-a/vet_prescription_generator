@@ -1,0 +1,38 @@
+{
+  "veterinarian": {
+    "name": "Dr. Camilo Vergara",
+    "title": "Médico Veterinario",
+    "rut": "17.622.685-4",
+    "clinic": "Veterinaria",
+    "address": "",
+    "phone": "",
+    "email": ""
+  },
+  "app": {
+    "title": "Receta Veterinaria",
+    "version": "1.0.0",
+    "language": "es",
+    "dateFormat": "DD/MM/YYYY",
+    "autoSave": false,
+    "printLayout": "A4"
+  },
+  "storage": {
+    "localStorageKey": "recetasVeterinarias",
+    "autoBackup": false,
+    "maxRecipes": 1000,
+    "compressionEnabled": false
+  },
+  "ui": {
+    "theme": "default",
+    "showWelcomeMessage": true,
+    "compactMode": false,
+    "animationsEnabled": true
+  },
+  "features": {
+    "multipleVeterinarians": false,
+    "prescriptionTemplates": false,
+    "medicationDatabase": false,
+    "patientHistory": false,
+    "printPreview": true
+  }
+}

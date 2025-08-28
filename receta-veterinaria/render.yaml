@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: receta-veterinaria-app
+    env: node
+    repo: https://github.com/tu-usuario/receta-veterinaria-app.git  # Replace with your actual repo
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: receta-veterinaria-app
+          property: port
+      - key: DATABASE_URL
+        fromDatabase:
+          name: receta-veterinaria-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: BCRYPT_ROUNDS
+        value: 12
+      - key: LOG_LEVEL
+        value: info
+
+  - type: pserv
+    name: receta-veterinaria-db
+    env: postgresql
+    plan: free
+    region: oregon
+    databaseName: receta_veterinaria
+    databaseUser: receta_admin
+    
+databases:
+  - name: receta-veterinaria-db
+    databaseName: receta_veterinaria
+    user: receta_admin
+    plan: free
