@@ -2,19 +2,33 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Database configuration
-const dbConfig = {
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-  // Alternative individual config (if not using DATABASE_URL)
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'receta_veterinaria',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
-  max: 20, // maximum number of clients in pool
-  idleTimeoutMillis: 30000, // close idle clients after 30 seconds
-  connectionTimeoutMillis: 2000, // return error after 2 seconds if connection could not be established
-};
+let dbConfig;
+
+if (process.env.DATABASE_URL) {
+  // Use DATABASE_URL for production (Render, Heroku, etc.)
+  dbConfig = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 10000, // Increased timeout for cloud databases
+  };
+  console.log('🔗 Using DATABASE_URL connection');
+} else {
+  // Use individual config for local development
+  dbConfig = {
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    database: process.env.DB_NAME || 'receta_veterinaria',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || 'password',
+    ssl: false,
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
+  };
+  console.log('🔗 Using individual database config');
+}
 
 // Create connection pool
 const pool = new Pool(dbConfig);
